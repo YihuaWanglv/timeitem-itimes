@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>timeitem sign up</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="assets/css/sign-up.css" />
+  <link rel="stylesheet" href="assets/css/sign-up-plus.css" />
+  
+</head>
+<body>
+
+  <div class="bert-alert clearfix">
+    <div class="container">
+      <p></p>
+      
+    </div> <!-- end .container -->
+  </div> <!-- end .bert-alert -->
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
+        <div class="auth-logo auth-header">
+          <a href="https://timeitem.com/">
+            TimeItem
+          </a>
+        </div>
+        <div class="auth-wrapper">
+          <form id="regist-form" >
+            <div class="form-group">
+              <label for="name">Username</label>
+              <input type="name" class="form-control valid" name="name" id="name" aria-required="true" aria-invalid="false">
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" class="form-control valid" name="email" id="email" aria-required="true" aria-invalid="false">
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" name="password" id="password">
+            </div>
+            <input type="submit" value="Sign up" class="btn btn-block btn-success">
+          </form>
+        </div>
+        <div class="auth-footer">
+          Registered?<br>
+          <a href="/view/sign-in.html">Log in</a>
+          <br><br><br><br>
+          Forgot password?<br>
+          <a href="">Reset password</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="/bower_components/jquery-validation/dist/jquery.validate.min.js"></script>
+  <script type="text/javascript" src="/lib/layer-v2.1/layer/layer.js"></script>
+  <script type="text/javascript" src="/app/user/register.js"></script>
+</body>
+</html>

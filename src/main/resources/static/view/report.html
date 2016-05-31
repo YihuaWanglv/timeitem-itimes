@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/css/global.css" />
+  <style>
+  canvas{
+      -moz-user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+  }
+
+  </style>
+</head>
+<body>
+  <div id="header"></div>
+
+  <div class="jumbotron">
+    <div class="container">
+      <h1>Filter.</h1>
+      <p><a class="btn btn-success btn-lg" href="#" role="button">show items &raquo;</a></p>
+    </div>
+  </div>
+
+  <!-- <div class="jumbotron">
+    <div class="container">
+      <div class="row">
+        
+        <form class="form-inline">
+          <div class="col-lg-12">
+            <div class="form-group col-lg-1">
+              <button class="btn btn-default btn-chart-config" type="button" title="Config">
+                <span class="glyphicon glyphicon-cog"></span>
+              </button>
+            </div>
+            <div class="form-group form-edit col-lg-2">
+              <label>
+                <input type="checkbox" class="form-inline-checkbox">Show This Chart
+              </label>
+            </div>
+            <div class="form-group form-edit col-lg-4">
+              <label for="exampleInputEmail1">Chart Title: </label>
+              <input type="text" class="form-control" placeholder="Chart Title">
+            </div>
+            <div class="form-group form-edit col-lg-1">
+              <button type="submit" class="btn btn-default">Save</button>
+            </div>
+          </div> 
+        </form>          
+      </div>
+    </div>
+  </div> -->
+
+  <div id="chart_container"></div>
+
+  <footer class="footer text-center"><p>&copy; 2016 TimeItem, Inc.</p></footer>
+
+  <script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="/bower_components/Chart.js/dist/Chart.bundle.js"></script>
+  <script type="text/javascript" src="/app/common/page-layout-init.js"></script>
+  <script type="text/javascript" src="/app/common/lib-random.js"></script>
+  <script type="text/javascript" src="/app/common/lib-md5.js"></script>
+  <script type="text/javascript" src="/app/module/module-report.js"></script>
+  <script type="text/javascript" src="/app/report/report.js"></script>
+</body>
+</html>

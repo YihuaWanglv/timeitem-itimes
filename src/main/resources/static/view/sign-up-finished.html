@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/css/global.css" />
+</head>
+<body>
+  <div id="header"></div>
+  <div style="background:transparent !important" class="jumbotron">
+    <div class="container">
+
+    <h3>Welcom! <span class="field-username"></span>You register of TimeItem finished successfully!</h3>
+      <p>You should login E-mail to verify your e-mail address first.</p>
+      <p class="lead">
+        <a href="#" class="btn btn-lg btn-success field-index">Login Email</a>
+      </p>
+
+      <h3>Or,</h3>
+      <p>You want to verify later.</p>
+      <p class="lead">
+        <a href="/item.html" class="btn btn-lg btn-success">Get Started</a>
+      </p>
+
+      
+      
+    </div>
+  </div>
+
+
+  <div class="jumbotron">
+    <div class="container">
+      
+    </div>
+  </div>
+  <footer class="footer text-center"><p>&copy; 2016 TimeItem, Inc.</p></footer>
+
+  <script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script> 
+    $(function(){
+      $("#header").load("/view/header.html");
+      if (localStorage.name) $('.field-username').text(localStorage.name);
+      if (localStorage.index) $('.field-index').attr("href",localStorage.index);
+    });
+  </script>
+</body>
+</html>

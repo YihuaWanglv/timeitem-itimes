@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./css/global.css" />
+  </head>
+  <body ng-app="manager">
+    <div id="header"></div>
+    <div class="nav-right-holder"></div>
+    <div class="container" ng-controller="CategoryController">
+      <div class="page-header">
+        <h1>Category manager</h1>
+        <a href="index.html">index</a> <a href="/item.html">home</a>
+      </div>
+      <div class="alert alert-info" role="alert" ng-hide="categorys &amp;&amp; categorys.length > 0">
+        There are no categorys yet.
+      </div>
+      <form class="form-horizontal" role="form" ng-submit="addCategory(newCategory)">
+        <div class="input-group">
+          <input type="text" class="form-control" ng-model="newCategory" placeholder="Enter a new category..." />
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="submit" ng-disabled="!newCategory" title="Add">
+              <span class="glyphicon glyphicon-plus"></span>
+            </button>
+          </span>
+        </div>
+        <hr />
+        <div class="form-group" ng-repeat="category in categorys">
+          <div class="col-xs-9">
+            <label>
+              <input type="text" class="form-control" ng-model="category.categoryName" ng-if="!edit"/><span ng-if="edit">{{category.categoryName}}</span>
+            </label>
+          </div>
+          <div class="col-xs-3">
+            <button class="pull-right btn btn-success" type="button" title="Update" ng-if="!edit" ng-click="changeButtonFlag();updateCategory(category)">
+              <span class="glyphicon glyphicon-ok"></span>
+            </button>
+            <button class="pull-right btn btn-primary" type="button" title="Edit" ng-if="edit" ng-click="changeButtonFlag();">
+              <span class="glyphicon glyphicon-edit"></span>
+            </button>
+            <button class="pull-right btn btn-danger" type="button" title="Delete"
+              ng-click="deleteCategory(category)" ng-if="edit">
+              <span class="glyphicon glyphicon-trash"></span>
+            </button>
+          </div>
+
+        </div>
+        
+      </form>
+    </div>
+    <footer class="footer text-center"><p>&copy; 2016 TimeItem, Inc.</p></footer>
+    <script type="text/javascript" src="./bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="./bower_components/angular-resource/angular-resource.min.js"></script>
+    <script type="text/javascript" src="./bower_components/lodash/dist/lodash.min.js"></script>
+    <script type="text/javascript" src="./bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="./app/common/page-layout-init.js"></script>
+    <script type="text/javascript" src="./app/manager/manager.js"></script>
+    <script type="text/javascript" src="./app/manager/controllers.js"></script>
+    <script type="text/javascript" src="./app/manager/services.js"></script>
+  </body>
+</html>

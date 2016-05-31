@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.ItemMapper">
+	<resultMap id="ItemResultMap" type="Item">
+		<id column="item_id" property="itemId"/>
+		<result column="user_id" property="userId"/>
+		<result column="date" property="date"/>
+		<result column="category_id" property="categoryId"/>
+		<result column="location_id" property="locationId"/>
+		<result column="project_id" property="projectId"/>
+		<result column="item" property="item"/>
+		<result column="tags" property="tags"/>
+		<result column="duration" property="duration"/>
+		<result column="year" property="year"/>
+		<result column="month" property="month"/>
+		<result column="day" property="day"/>
+		<result column="week" property="week"/>
+		<result column="user_name" property="userName"/>
+		<result column="category_name" property="categoryName"/>
+		<result column="project_name" property="projectName"/>
+		<result column="location_name" property="locationName"/>
+		<result column="result" property="result"/>
+	</resultMap>
+	<sql id="findItemsByParamsCommon">
+		from item i where 1=1
+		<if test="userId != null">
+			and i.user_id = #{userId}
+		</if>
+		<if test="categoryId != null">
+			and i.category_id = #{categoryId}
+		</if>
+		<if test="locationId != null">
+			and i.location_id = #{locationId}
+		</if>
+		<if test="projectId != null">
+			and i.project_id = #{projectId}
+		</if>
+		<if test="dateString != null">
+			and i.date = #{dateString}
+		</if>
+		<if test="dateStringStart != null">
+			and i.date <![CDATA[ >= ]]>
+			#{dateStringStart}
+		</if>
+		<if test="dateStringEnd != null">
+			and i.date <![CDATA[ <= ]]>
+			#{dateStringEnd}
+		</if>
+		<if test="year != null">
+			and i.year = #{year}
+		</if>
+		<if test="month != null">
+			and i.month = #{month}
+		</if>
+		<if test="day != null">
+			and i.day = #{day}
+		</if>
+		<if test="week != null">
+			and i.week = #{week}
+		</if>
+		<if test="userName != null">
+			and i.user_name = #{userName}
+		</if>
+		<if test="categoryName != null">
+			and i.category_name = #{categoryName}
+		</if>
+		<if test="projectName != null">
+			and t.project_name = #{projectName}
+		</if>
+		<if test="locationName != null">
+			and t.location_name = #{locationName}
+		</if>
+	</sql>
+	<select id="findItemsByParams" parameterType="com.iyihua.model.query.UserItemQueryDTO"
+		resultMap="ItemResultMap">
+		select
+		i.*
+		<include refid="findItemsByParamsCommon" />
+		<if test="start != null and size != null and page != null and page > 0 and start > -1">
+			limit #{start}, #{size}
+		</if>
+	</select>
+	<select id="countItemsByParams" parameterType="com.iyihua.model.query.UserItemQueryDTO"
+		resultType="Integer">
+		select count(*)
+		<include refid="findItemsByParamsCommon" />
+	</select>
+
+	<select id="selectItemById" resultType="Item">
+		select * from item where
+		item_id = #{id}
+	</select>
+	
+	<sql id="listItemsCommon">
+		from (
+			select t.* from item t where t.user_id=#{userId} order by t.date desc, t.item_id desc
+		) as i where 1=1
+		<if test="categoryId != null">
+			and i.category_id = #{categoryId}
+		</if>
+		<if test="locationId != null">
+			and i.location_id = #{locationId}
+		</if>
+		<if test="projectId != null">
+			and i.project_id = #{projectId}
+		</if>
+		<if test="dateString != null">
+			and i.date = #{dateString}
+		</if>
+		<if test="dateStringStart != null">
+			and i.date <![CDATA[ >= ]]>
+			#{dateStringStart}
+		</if>
+		<if test="dateStringEnd != null">
+			and i.date <![CDATA[ <= ]]>
+			#{dateStringEnd}
+		</if>
+		<if test="year != null">
+			and i.year = #{year}
+		</if>
+		<if test="month != null">
+			and i.month = #{month}
+		</if>
+		<if test="day != null">
+			and i.day = #{day}
+		</if>
+		<if test="week != null">
+			and i.week = #{week}
+		</if>
+		<if test="userName != null">
+			and i.user_name = #{userName}
+		</if>
+		<if test="categoryName != null">
+			and i.category_name = #{categoryName}
+		</if>
+		<if test="projectName != null">
+			and t.project_name = #{projectName}
+		</if>
+		<if test="locationName != null">
+			and t.location_name = #{locationName}
+		</if>
+	</sql>
+	<select id="listItems" parameterType="com.iyihua.model.query.UserItemQueryDTO"
+		resultMap="ItemResultMap">
+		select
+		i.*
+		<include refid="listItemsCommon" />
+		<if test="start != null and size != null and page != null and page > 0 and start > -1">
+			limit #{start}, #{size}
+		</if>
+	</select>
+	<select id="countItems" parameterType="com.iyihua.model.query.UserItemQueryDTO"
+		resultType="Integer">
+		select count(*)
+		<include refid="listItemsCommon" />
+	</select>
+</mapper>

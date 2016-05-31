@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<dubbo:application name="dubbo_consumer_itimes" />
+	<!-- 使用zookeeper注册中心暴露服务地址 -->
+	<dubbo:protocol name="dubbo" />
+	<dubbo:registry address="${zookeeper.address}" timeout="${zookeeper.consumer.timeout}" />
+
+	<dubbo:reference id="userService"
+		interface="com.iyihua.remote.base.UserRemote"
+		timeout="${zookeeper.consumer.timeout}" retries="${zookeeper.consumer.retries}"
+		check="${isCheck}" />
+
+</beans>

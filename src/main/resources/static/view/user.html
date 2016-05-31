@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./css/global.css" />
+  </head>
+  <body ng-app="manager">
+    <div id="header"></div>
+    <div class="nav-right-holder"></div>
+    <div class="container" ng-controller="ProjectController">
+      <div class="page-header">
+        <h1>User center</h1>
+        <a href="/index.html">Index</a> <a href="/item.html">Home</a>
+      </div>
+      <div class="alert alert-info" role="alert">
+        Here is the page of user center.
+      </div>
+      
+      
+    </div>
+    <script type="text/javascript" src="./bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="./bower_components/angular-resource/angular-resource.min.js"></script>
+    <script type="text/javascript" src="./bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="./app/common/page-layout-init.js"></script>
+    <script type="text/javascript" src="./bower_components/lodash/dist/lodash.min.js"></script>
+    <script type="text/javascript" src="./app/manager/manager.js"></script>
+    <script type="text/javascript" src="./app/manager/controllers.js"></script>
+    <script type="text/javascript" src="./app/manager/services.js"></script>
+  </body>
+</html>

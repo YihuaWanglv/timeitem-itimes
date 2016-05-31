@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.min.css" />
+</head>
+<body ng-app="myApp">
+  <div class="container">
+    <div class="page-header">
+      <h1>login</h1>
+    </div>
+    <div class="alert alert-info">Please login first.</div>
+    <form action="http://localhost:8080/auth" method="post">
+      用户名：
+      <input type="text" name="username">
+      <br/>
+      密码：
+      <input type="password" name="password">
+      <br/>
+      <input type="submit" value="登录"></form>
+  </div>
+</body>
+</html>

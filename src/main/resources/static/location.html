@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./css/global.css" />
+  </head>
+  <body ng-app="manager">
+    <div id="header"></div>
+    <div class="nav-right-holder"></div>
+    <div class="container" ng-controller="LocationController">
+      <div class="page-header">
+        <h1>Location manager</h1>
+        <a href="index.html">index</a> <a href="/item.html">home</a>
+      </div>
+      <div class="alert alert-info" role="alert" ng-hide="locations &amp;&amp; locations.length > 0">
+        There are no location yet.
+      </div>
+      <form class="form-horizontal" role="form" ng-submit="createLocation(newLocation)">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Enter a new location..." ng-model="newLocation"/>
+          <span class="input-group-btn">
+            <button class="btn btn-success" type="submit" title="Add" ng-disabled="!newLocation">
+              <span class="glyphicon glyphicon-plus"></span>
+            </button>
+          </span>
+        </div>
+        <hr />
+        <div class="input-group" ng-repeat="location in locations">
+          <span ng-if="!location.editting">{{location.location}}</span>
+          <input type="text" class="form-control" ng-model="location.location" ng-if="location.editting">
+          <div class="input-group-btn">
+              <button class="btn btn-default btn-danger" type="button" title="Delete" ng-if="!location.editting" ng-click="deleteLocation(location)">
+                <span class="glyphicon glyphicon-trash"></span>
+              </button>
+              <button class="btn btn-default btn-primary" type="button" title="Edit" ng-if="!location.editting" ng-click="changeButtonFlag(location);">
+                <span class="glyphicon glyphicon-edit"></span>
+              </button>
+              <button class="btn btn-default btn-success" type="button" title="Update" ng-if="location.editting" ng-click="changeButtonFlag(location);updateLocation(location)">
+                <span class="glyphicon glyphicon-ok"></span>
+              </button>
+            </div>
+        </div>
+      </form>
+      
+    </div>
+    <footer class="footer text-center"><p>&copy; 2016 TimeItem, Inc.</p></footer>
+    <script type="text/javascript" src="./bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="./bower_components/angular-resource/angular-resource.min.js"></script>
+    <script type="text/javascript" src="./bower_components/lodash/dist/lodash.min.js"></script>
+    <script type="text/javascript" src="./bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="./app/common/page-layout-init.js"></script>
+    <script type="text/javascript" src="./app/manager/manager.js"></script>
+    <script type="text/javascript" src="./app/manager/controllers.js"></script>
+    <script type="text/javascript" src="./app/manager/services.js"></script>
+  </body>
+</html>

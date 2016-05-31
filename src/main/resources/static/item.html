@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <link rel="stylesheet" href="./bower_components/bootstrap-css-only/css/bootstrap.min.css" /> -->
+    <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./bower_components/angular-ui-select/dist/select.min.css" />
+    <link rel="stylesheet" href="./css/global.css" />
+    <link rel="stylesheet" href="./css/item.css" />
+    <link rel="stylesheet" href="./css/over-layer.css" />
+    <!--[if lt IE 9]>
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.js"></script>
+      <script src="http://cdnjs.cloudflare.com/ajax/libs/es5-shim/2.2.0/es5-shim.js"></script>
+      <script>
+        document.createElement('ui-select');
+        document.createElement('ui-select-match');
+        document.createElement('ui-select-choices');
+      </script>
+    <![endif]-->
+  </head>
+  <body ng-app="myApp">
+    <div id="header"></div>
+    <div class="nav-right-holder"></div>
+    <div class="container" ng-controller="ItemController">
+      <div class="page-header">
+        <h1>A time items list</h1>
+      </div>
+
+      <div class="alert alert-info" role="alert" ng-hide="items &amp;&amp; items.length > 0">
+        There are no items yet.
+      </div>
+      <div class="alert alert-info" role="alert" ng-show="checkConfig()">
+        You should config your category,project,location info first. You can config in config center or here below.
+        <a href="/category.html">category</a> <a href="/project.html">project</a> <a href="/location.html">location</a>
+      </div>
+      
+      <form class="form-horizontal" role="form" ng-submit="createItem(newItem)">
+        
+        <div class="form-group">
+          <div class="col-sm-3">
+            <ui-select ng-model="newItem.category" theme="bootstrap">
+              <ui-select-match placeholder="Select a category...">{{$select.selected.categoryName}}</ui-select-match>
+              <ui-select-choices repeat="category in categorys">
+                <div ng-bind-html="category.categoryName"></div>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+          <div class="col-sm-3">
+            <ui-select ng-model="newItem.project" theme="bootstrap">
+              <ui-select-match placeholder="Select a project...">{{$select.selected.projectName}}</ui-select-match>
+              <ui-select-choices repeat="project in projects">
+                <div ng-bind-html="project.projectName"></div>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+          <div class="col-sm-3">
+            <ui-select ng-model="newItem.location" theme="bootstrap">
+              <ui-select-match placeholder="Select a location...">{{$select.selected.location}}</ui-select-match>
+              <ui-select-choices repeat="location in locations">
+                <div ng-bind-html="location.location"></div>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+          <div class="col-sm-3">
+            <input type="text" class="form-control"  placeholder='Enter some tag split with ","'  ng-model="newItem.tags"/>
+            <!-- <ui-select ng-model="newItem.tag" theme="bootstrap">
+              <ui-select-match placeholder="Select a tag...">{{$select.selected.tagName}}</ui-select-match>
+              <ui-select-choices repeat="tag in tags">
+                <div ng-bind-html="tag.tagName"></div>
+              </ui-select-choices>
+            </ui-select> -->
+          </div>
+        </div>
+
+        <div class="form-group">
+          
+          <div class="col-sm-3">
+            <input class="form-control" type="date" name="date" ng-model="newDate" placeholder="yyyy-MM-dd" min="1949-01-01" required />
+          </div>
+          <div class="col-sm-3">
+            <input type="number" class="form-control"  placeholder='How much time of this Item?' ng-model="newItem.duration"/>
+          </div>
+          <div class="col-sm-6">
+            <div class="input-group">
+              <input type="text" class="form-control"  placeholder="Enter the description..." ng-model="newItem.item"/>
+              <span class="input-group-btn">
+                <button class="btn btn-success" type="submit" title="Add" ng-disabled="!newItem.item">
+                  <span class="glyphicon glyphicon-plus"></span>
+                </button>
+              </span>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div ng-repeat="item in items track by $index">
+          <div class="content-group" ng-if="showItemDate(item.date)">
+            <span class="content-group-title">{{item.date | date:'yyyy-MM-dd'}}</span>
+          </div>
+          <div class="input-group content-list" >
+            <div class="content-list-main">
+              <div class="col-sm-2">
+                <span ng-if="!item.editting">{{item.date | date:'yyyy-MM-dd'}}&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span ng-if="!item.editting">{{item.duration}}h</span>
+              </div>
+              <div class="col-sm-5">
+                <span ng-if="!item.editting">{{item.item}}</span>
+              </div>
+              <div class="col-sm-5">
+                <span ng-if="!item.editting" class="col-sm-4">@{{item.locationName}}</span>
+                <span ng-if="!item.editting" class="col-sm-4">@{{item.categoryName}}</span>
+                <span ng-if="!item.editting" class="col-sm-4">@{{item.projectName}}</span>
+              </div>
+              
+              
+              
+              <input type="text" class="form-control" ng-model="item.item" ng-if="item.editting">
+            </div>
+            <div class="input-group-btn">
+              <button class="btn btn-default btn-danger" type="button" title="Delete" ng-if="!item.editting" ng-click="deleteItem(item)">
+                <span class="glyphicon glyphicon-trash"></span>
+              </button>
+              <button class="btn btn-default btn-primary" type="button" title="Edit" ng-if="!item.editting" ng-click="editItem(item);">
+                <span class="glyphicon glyphicon-edit"></span>
+              </button>
+              <button class="btn btn-default btn-success" type="button" title="Update" ng-if="item.editting" ng-click="changeButtonFlag(item);updateItem(item)">
+                <span class="glyphicon glyphicon-ok"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="form-group content-list-footer">
+          <div class="col-lg-1 col-offset-6 centered content-list-footer-center" ng-hide="nomore==1">
+            <a class="" ng-click="listNext()" href="javascript:void(0);">
+              more<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+            </a>
+          </div>
+          <div class="alert alert-info text-center" role="alert" ng-hide="nomore==0">
+            no more items.
+          </div>       
+        </div>
+        
+      </form>
+
+
+      <!--layer-->
+      <div id="edit-layer"  class="over-wrapper" ng-hide="showEditLayer==0">
+        <a ng-click="closeLayer(edittingItem)" href="javascript:void(0);" class="over-close">�</a>
+        <!-- 
+        <button type="button" class="btn btn-default btn-lg over-close">
+          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        </button> -->
+        <div class="container">
+          <div class="row">
+              <div class="over-top">
+                <h1 id="card-title-output">Editting time item</h1>
+              </div>
+              <div class="over-bottom">
+                <form class="form-horizontal" role="form" ng-submit="updateItem(edittingItem)">
+                  <div class="form-group">
+                    <div class="col-sm-3">
+                      <ui-select ng-model="edittingItem.category" theme="bootstrap">
+                        <ui-select-match placeholder="Select a category...">{{$select.selected.categoryName}}</ui-select-match>
+                        <ui-select-choices repeat="category in categorys">
+                          <div ng-bind-html="category.categoryName"></div>
+                        </ui-select-choices>
+                      </ui-select>
+                    </div>
+                    <div class="col-sm-3">
+                      <ui-select ng-model="edittingItem.project" theme="bootstrap">
+                        <ui-select-match placeholder="Select a project...">{{$select.selected.projectName}}</ui-select-match>
+                        <ui-select-choices repeat="project in projects">
+                          <div ng-bind-html="project.projectName"></div>
+                        </ui-select-choices>
+                      </ui-select>
+                    </div>
+                    <div class="col-sm-3">
+                      <ui-select ng-model="edittingItem.location" theme="bootstrap">
+                        <ui-select-match placeholder="Select a location...">{{$select.selected.location}}</ui-select-match>
+                        <ui-select-choices repeat="location in locations">
+                          <div ng-bind-html="location.location"></div>
+                        </ui-select-choices>
+                      </ui-select>
+                    </div>
+                    <div class="col-sm-3">
+                      <input type="text" class="form-control"  placeholder='Enter some tag split with ","'  ng-model="edittingItem.tags"/>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="col-sm-3">
+                      <input class="form-control" type="date" name="date"  placeholder="yyyy-MM-dd" min="1949-01-01" ng-model="edittingItem.date" required />
+                    </div>
+                    <div class="col-sm-3">
+                      <input type="number" class="form-control"  placeholder='How much time of this Item?' ng-model="edittingItem.duration"/>
+                    </div>
+                    <div class="col-sm-6">
+                      <input type="text" class="form-control"  placeholder="Enter the description..." ng-model="edittingItem.item"/>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-sm-12">
+                      <textarea placeholder="You can enter your results or outcomes here..." class="form-control" style="overflow: hidden; height: 220px;"></textarea>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-md-12 text-center"> 
+                      <button id="save" type="submit" class="btn btn-success">Save</button> 
+                    </div>
+                  </div>
+                </form>
+                
+              </div>
+ 
+              <div class="over-footer">
+                <p>Card created 8 days ago by iyihua</p>
+                <p>
+                  <a href="#" class="delete-card" id="delete-card">Delete this item</a>
+                </p>
+              </div>
+          </div>
+        </div>
+      </div>
+      <!--layer end-->
+    </div>
+    <footer class="footer text-center"><p>&copy; 2016 TimeItem, Inc.</p></footer>
+    <script type="text/javascript" src="./bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="./bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    
+    <script type="text/javascript" src="./bower_components/angular-resource/angular-resource.min.js"></script>
+    <script type="text/javascript" src="./bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <!-- <script type="text/javascript" src="./bower_components/lodash/dist/lodash.min.js"></script> -->
+    <script type="text/javascript" src="./bower_components/angular-ui-select/dist/select.min.js"></script>
+    <script type="text/javascript" src="./lib/angular/input-date/angular-input-date.js"></script>
+    <script type="text/javascript" src="./app/common/page-layout-init.js"></script>
+    <script type="text/javascript" src="./app/app.js"></script>
+    <script type="text/javascript" src="./app/controllers.js"></script>
+    <script type="text/javascript" src="./app/services.js"></script>
+  </body>
+</html>

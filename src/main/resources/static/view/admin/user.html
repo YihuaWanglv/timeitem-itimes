@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="./bower_components/bootstrap-css-only/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./css/global.css" />
+  </head>
+  <body ng-app="manager">
+    <div id="header"></div>
+    <div class="nav-right-holder"></div>
+    <div class="container" ng-controller="ProjectController">
+      <div class="page-header">
+        <h1>Project manager</h1>
+        <a href="index.html">index</a>
+      </div>
+      <div class="alert alert-info" role="alert" ng-hide="projects &amp;&amp; projects.length > 0">
+        There are no project yet.
+      </div>
+      <form class="form-horizontal" role="form" ng-submit="createProject(newProject)">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Enter a new project..." ng-model="newProject"/>
+          <span class="input-group-btn">
+            <button class="btn btn-success" type="submit" title="Add" ng-disabled="!newProject">
+              <span class="glyphicon glyphicon-plus"></span>
+            </button>
+          </span>
+        </div>
+        <hr />
+        <div class="input-group" ng-repeat="project in projects">
+          <span ng-if="!project.editting">{{project.projectName}}</span>
+          <input type="text" class="form-control" ng-model="project.projectName" ng-if="project.editting">
+          <div class="input-group-btn">
+              <button class="btn btn-default btn-danger" type="button" title="Delete" ng-if="!project.editting" ng-click="deleteProject(project)">
+                <span class="glyphicon glyphicon-trash"></span>
+              </button>
+              <button class="btn btn-default btn-primary" type="button" title="Edit" ng-if="!project.editting" ng-click="changeButtonFlag(project);">
+                <span class="glyphicon glyphicon-edit"></span>
+              </button>
+              <button class="btn btn-default btn-success" type="button" title="Update" ng-if="project.editting" ng-click="changeButtonFlag(project);updateProject(project)">
+                <span class="glyphicon glyphicon-ok"></span>
+              </button>
+            </div>
+        </div>
+      </form>
+      
+    </div>
+    <script type="text/javascript" src="./bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="./bower_components/angular-resource/angular-resource.min.js"></script>
+    <script type="text/javascript" src="./bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="./app/common/page-layout-init.js"></script>
+    <script type="text/javascript" src="./bower_components/lodash/dist/lodash.min.js"></script>
+    <script type="text/javascript" src="./app/manager/manager.js"></script>
+    <script type="text/javascript" src="./app/manager/controllers.js"></script>
+    <script type="text/javascript" src="./app/manager/services.js"></script>
+  </body>
+</html>

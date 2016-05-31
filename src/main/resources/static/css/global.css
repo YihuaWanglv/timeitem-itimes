@@ -1,0 +1,146 @@
+body, button, input, select, textarea, h2, h3, h4, h5, h6 {
+	font-family: Georgia, Lato, Helvetica, Arial, Tahoma, "Microsoft YaHei",
+		sans-serif;
+}
+
+h1 {
+	font-family: /* Century Gothic, Impact,  */ Georgia, Lato, Helvetica,
+		Arial, Tahoma, "Microsoft YaHei", sans-serif;
+}
+
+body .font-header {
+	font-family: Georgia, STXihei, "华文细黑", "Microsoft YaHei", Helvetica,
+		Arial, sans-serif;
+	/* font-size: 22px; */
+}
+
+body {
+	padding-top: 50px;
+}
+
+input {
+	background-color: #f5f5f5 !important;
+	border: none !important;
+}
+
+div.ui-select-container .btn-default {
+	background-color: #f5f5f5 !important;
+	border: none !important;
+}
+
+/* .navbar-inverse {
+	background-color: #f5f5f5 !important;
+	border-color: #f5f5f5 !important;
+} */
+
+.starter-template {
+	padding: 40px 0 0 0;
+	text-align: center;
+	height:90vh;
+}
+.jumbotron {
+	height:100%;
+}
+
+.content-center {
+	text-align: center;
+}
+
+/*
+ * 侧边导航
+ */
+.my-navbar-right {
+	position: fixed;
+	top: 0;
+	/* left:0; */
+	right: -80px;
+	z-index: 99;
+	width: 80px;
+	height: 100%;
+	background: #333;
+	margin-top: 50px;
+}
+
+.my-navbar-right-show {
+	right: 0;
+}
+
+.my-navbar-right .logo {
+	height: 60px;
+	line-height: 60px;
+	text-align: center;
+	background-color: #e50000
+}
+
+.my-navbar-right .navbar-nav {
+	margin-top: 50px;
+}
+
+.my-navbar-right .navbar-nav>li {
+	position: relative;
+}
+
+.my-navbar-right .navbar-nav>li>a {
+	display: block;
+	text-align: center;
+	/* line-height: 50px;
+	height: 50px; */
+	color: #fff;
+}
+
+.my-navbar-right .navbar-nav>li>a:hover, .navbar-nav>li.active>a {
+	background: #000;
+}
+
+.my-navbar-right .navbar-nav li.active:after {
+	position: absolute;
+	content: '';
+	right: 0;
+	top: 50%;
+	margin-top: -8px;
+	/* border: 8px solid transparent;
+	border-right-color: #f1f1f1; */
+}
+
+
+/**/
+.navbar-inverse {
+    /*background-color: #fff8e7;
+    border-color: #fff8e7;*/
+    background-color: #fff;
+    border-color: #fff;
+}
+.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
+    /*border-color: #fff8e7;*/
+    border-color: #fff;
+}
+.navbar-inverse .navbar-nav>li>a:hover, .navbar-inverse .navbar-nav>li>a:focus {
+    color: #000;
+    /*background-color: transparent;*/
+}
+.navbar-inverse .navbar-brand:hover, .navbar-inverse .navbar-brand:focus {
+    color: #000;
+}
+
+/*hide and show*/
+.show {
+  display: block !important;
+}
+.hidden {
+  display: none !important;
+  visibility: hidden !important;
+}
+.invisible {
+  visibility: hidden;
+}
+
+.footer {
+  position: relative;
+  margin-top: 50px;
+  height: 60px;
+  clear:both;
+  padding-top:20px;
+}
+.form-inline-checkbox {
+	margin-top: 7px !important;
+}

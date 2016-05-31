@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iyihua.itimes.mapper.report.ReportMapper">
+	<!-- <resultMap id="CategoryReportMap" type="com.iyihua.model.base.report.CategoryReport">
+		<id column="category_id" property="categoryId" jdbcType="BIGINT" />
+		<result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+		<result column="durations" property="durations" jdbcType="DECIMAL" />
+	</resultMap> -->
+	<resultMap id="CategoryTimeReportMap" type="com.iyihua.model.base.report.CategoryTimeReport">
+		<result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+		<result column="reportdate" property="reportdate" jdbcType="VARCHAR" />
+		<result column="durations" property="durations" jdbcType="DECIMAL" />
+	</resultMap>
+	
+	<resultMap id="ReportResultMap" type="com.iyihua.model.base.report.ReportData">
+		<id column="type_id" property="typeId" jdbcType="BIGINT" />
+		<result column="type_name" property="typeName" jdbcType="VARCHAR" />
+		<result column="reportdate" property="reportdate" jdbcType="VARCHAR" />
+		<result column="durations" property="durations" jdbcType="DECIMAL" />
+	</resultMap>
+
+	<!-- 
+	<select id="reportCategory" resultMap="CategoryReportMap">
+		select category_id,
+		category_name, sum(duration) as durations from item where user_id=1
+		group by category_name
+	</select>
+	<select id="reportCategoryTime" resultMap="CategoryTimeReportMap">
+		select a.*, b.durations
+		from (
+			select distinct category_name,tt.reportdate from item join 
+			(
+				select distinct concat(year(i.date),'-',month(i.date)) reportdate from item i where user_id=1
+			) tt
+			where user_id=1
+		) a
+		left join
+		(
+			select category_name, reportdate, sum(duration) durations from 
+			(
+				select concat(year(i.date),'-',month(i.date)) reportdate,i.* from item i where i.user_id=1
+			) t group by category_name,reportdate
+		) b
+		on a.category_name=b.category_name and a.reportdate=b.reportdate
+		order by a.category_name,a.reportdate;
+	</select> 
+	-->
+	
+	
+	<select id="reportSimple" resultMap="ReportResultMap" parameterType="com.iyihua.model.base.report.ReportQuery">
+		select 
+			<include refid="reportGroup" />
+			sum(duration) as durations 
+		from item where user_id=#{userId}
+		group by type_name;
+	</select>
+	<sql id="reportGroup">
+		<if test="type != null and type == 0" >
+			category_name as type_name,
+		</if>
+		<if test="type != null and type == 1" >
+			project_name as type_name, 
+		</if>
+		<if test="type != null and type == 2" >
+			location_name as type_name, 
+		</if>
+	</sql>
+	<select id="reportWithTime" resultMap="ReportResultMap" parameterType="com.iyihua.model.base.report.ReportQuery">
+		select a.*, b.durations
+		from (
+			select distinct <include refid="reportGroup" />
+				tt.reportdate from item join 
+			(
+				select distinct concat(year(i.date),'-',month(i.date)) reportdate from item i where user_id=1
+			) tt
+			where user_id=1
+		) a
+		left join
+		(
+			select  <include refid="reportGroup" />
+				reportdate, sum(duration) durations from 
+			(
+				select concat(year(i.date),'-',month(i.date)) reportdate,i.* from item i where i.user_id=1
+			) t group by category_name,reportdate
+		) b
+		on a.type_name=b.type_name and a.reportdate=b.reportdate
+		order by a.type_name,a.reportdate;
+	</select>
+</mapper>
